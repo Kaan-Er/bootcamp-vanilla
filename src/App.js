@@ -7,11 +7,16 @@ const App = () => {
   const [notes, setNotes] = useState([]);
 
   const addNote = (text) => {
-    setNotes([...notes, text]);
+    setNotes([text, ...notes]);
     setNote("");
   };
 
-  const removeNote = (text) => setNotes(notes.filter((item) => item !== text));
+  const editNoteById = (text, id) => {
+    notes[id] = text;
+    setNotes(notes.filter((item, index) => (index == id ? text : item)));
+  };
+
+  const removeNote = (id) => setNotes(notes.filter((_, index) => index !== id));
 
   return (
     <div className="App">
@@ -23,8 +28,14 @@ const App = () => {
         value={note}
       />
       <button onClick={() => addNote(note)}>Save Note</button>
-      {notes.map((item) => (
-        <NoteCard text={item} removeNote={removeNote} />
+      {notes.map((item, index) => (
+        <NoteCard
+          key={index}
+          text={item}
+          id={index}
+          editNoteById={editNoteById}
+          removeNote={removeNote}
+        />
       ))}
     </div>
   );
