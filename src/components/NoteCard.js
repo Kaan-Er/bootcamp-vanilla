@@ -1,12 +1,22 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const NoteCard = ({ text, editNoteById, removeNote, id }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [editNote, setEditNote] = useState("");
 
   return (
-    <div>
-      <p className="noteText">{text}</p>
+    <div className="noteSection">
+      <p className="noteText">
+        <Link
+          to={{
+            pathname: `/notes/${id}`,
+            state: text,
+          }}
+        >
+          {text}
+        </Link>
+      </p>
       {!isEdit && <button onClick={() => setIsEdit(true)}>Edit</button>}
       {isEdit && (
         <>

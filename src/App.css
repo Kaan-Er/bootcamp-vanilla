@@ -11,6 +11,22 @@ td {
   text-align: left;
 }
 
+.noteSection {
+  margin: 10px;
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  background-color: bisque;
+}
+
 .noteText {
   display: inline-block;
+  margin: 20px;
+
+}
+
+.noteText a {
+  text-decoration: none;
+  color: darkslategray;
 }

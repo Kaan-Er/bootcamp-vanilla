@@ -1,43 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
-import NoteCard from "./components/NoteCard";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import NotesPage from "./pages/Notes";
+import NotePage from "./pages/Note";
 
 const App = () => {
-  const [note, setNote] = useState("");
-  const [notes, setNotes] = useState([]);
-
-  const addNote = (text) => {
-    setNotes([text, ...notes]);
-    setNote("");
-  };
-
-  const editNoteById = (text, id) => {
-    notes[id] = text;
-    setNotes(notes.filter((item, index) => (index == id ? text : item)));
-  };
-
-  const removeNote = (id) => setNotes(notes.filter((_, index) => index !== id));
-
   return (
-    <div className="App">
-      <textarea
-        placeholder="Please enter your note..."
-        name="note"
-        text={note}
-        onChange={(e) => setNote(e.target.value)}
-        value={note}
-      />
-      <button onClick={() => addNote(note)}>Save Note</button>
-      {notes.map((item, index) => (
-        <NoteCard
-          key={index}
-          text={item}
-          id={index}
-          editNoteById={editNoteById}
-          removeNote={removeNote}
-        />
-      ))}
-    </div>
+    <Router>
+      <div>
+        <Switch>
+          <Route exact path="/" component={NotesPage} />
+          <Route path="/notes/:id" component={NotePage} />
+        </Switch>
+      </div>
+    </Router>
   );
 };
 
