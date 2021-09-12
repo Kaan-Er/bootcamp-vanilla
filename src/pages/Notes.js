@@ -1,21 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import NoteCard from "../components/NoteCard";
+import { NotesContext } from "../App";
 
 const NotesPage = () => {
-  const [note, setNote] = useState("");
-  const [notes, setNotes] = useState([]);
-
-  const addNote = (text) => {
-    setNotes([text, ...notes]);
-    setNote("");
-  };
-
-  const editNoteById = (text, id) => {
-    notes[id] = text;
-    setNotes(notes.filter((item, index) => (index == id ? text : item)));
-  };
-
-  const removeNote = (id) => setNotes(notes.filter((_, index) => index !== id));
+  const { note, setNote, notes, addNote } = useContext(NotesContext);
 
   return (
     <div>
@@ -27,14 +15,8 @@ const NotesPage = () => {
         value={note}
       />
       <button onClick={() => addNote(note)}>Save Note</button>
-      {notes.map((item, index) => (
-        <NoteCard
-          key={index}
-          text={item}
-          id={index}
-          editNoteById={editNoteById}
-          removeNote={removeNote}
-        />
+      {notes?.map((_, index) => (
+        <NoteCard key={index} id={index} />
       ))}
     </div>
   );

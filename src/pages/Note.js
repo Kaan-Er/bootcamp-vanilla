@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { NotesContext } from "../App";
 
-const NotePage = (props) => {
-  const text = props.location.state;
+const NotePage = ({ match }) => {
+  const { notes } = useContext(NotesContext);
   return (
     <div>
-      <p>{text}</p>
+      <p>{notes[match.params.id]}</p>
       <Link to="/">Back </Link>
     </div>
   );

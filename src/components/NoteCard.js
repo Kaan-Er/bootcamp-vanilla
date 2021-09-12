@@ -1,22 +1,16 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useHistory } from "react-router";
+import { NotesContext } from "../App";
 
-const NoteCard = ({ text, editNoteById, removeNote, id }) => {
+const NoteCard = ({ id }) => {
+  const history = useHistory();
   const [isEdit, setIsEdit] = useState(false);
   const [editNote, setEditNote] = useState("");
+  const { notes, editNoteById, removeNote } = useContext(NotesContext);
 
   return (
     <div className="noteSection">
-      <p className="noteText">
-        <Link
-          to={{
-            pathname: `/notes/${id}`,
-            state: text,
-          }}
-        >
-          {text}
-        </Link>
-      </p>
+      <p className="noteText">{notes[id]}</p>
       {!isEdit && <button onClick={() => setIsEdit(true)}>Edit</button>}
       {isEdit && (
         <>
@@ -35,7 +29,8 @@ const NoteCard = ({ text, editNoteById, removeNote, id }) => {
           </button>
         </>
       )}
-      <button onClick={() => removeNote(id)}>X</button>
+      <button onClick={() => history.push(`/notes/${id}`)}>Details</button>
+      <button onClick={() => removeNote(id)}>Remove</button>
     </div>
   );
 };
